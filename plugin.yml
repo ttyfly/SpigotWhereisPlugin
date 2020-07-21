@@ -1,0 +1,12 @@
+name: SpigotWhereisPlugin
+main: com.ttyfly.whereisplugin.SpigotWhereisPlugin
+version: 1.0
+author: ttyfly
+api-version: 1.16
+commands:
+  whereis:
+    description: 查询玩家位置
+    usage: /whereis [me/玩家名]
+  whereis-list:
+    description: 获取玩家所在区域列表
+    usage: /whereis-list [-r]
