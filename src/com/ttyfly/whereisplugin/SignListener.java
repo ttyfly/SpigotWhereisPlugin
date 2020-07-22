@@ -23,8 +23,7 @@ public class SignListener implements Listener {
 
 		Location loc = event.getBlock().getLocation();
 		RegionManager.getInstance().addRegion(name, loc);
-		event.getPlayer().sendMessage(
-				"(" + loc.getBlockX() + ", " + loc.getBlockY() + ", " + loc.getBlockZ() + ") ¸½½üÒÑÉè¶¨Îª" + name);
+		Utils.sendPluginMessage(event.getPlayer(), name + "å·²è®¾å®š");
 	}
 
 	@EventHandler
@@ -39,7 +38,7 @@ public class SignListener implements Listener {
 			return;
 
 		RegionManager.getInstance().deleteRegion(name, block.getLocation());
-		event.getPlayer().sendMessage(name + "Éè¶¨ÒÑÈ¡Ïû");
+		Utils.sendPluginMessage(event.getPlayer(), name + "è®¾å®šå·²å–æ¶ˆ");
 	}
 
 	private String getSignName(String[] lines) {

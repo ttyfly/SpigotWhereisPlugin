@@ -1,7 +1,6 @@
 package com.ttyfly.whereisplugin;
 
 import org.bukkit.Bukkit;
-import org.bukkit.Location;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -20,28 +19,22 @@ public class WhereisCmd implements CommandExecutor {
 		} else {
 			player = Bukkit.getPlayerExact(args[0]);
 			if (player == null) {
-				sender.sendMessage(args[0] + "ËÆºõ²¢²»´æÔÚÓÚÕâ¸öÊÀ½ç");
+				Utils.sendPluginMessage(sender, args[0] + "ä¼¼ä¹å¹¶ä¸å­˜åœ¨äºè¿™ä¸ªä¸–ç•Œ");
 				return true;
 			}
 		}
 
-		player.sendMessage(player.getName() + "Î»ÓÚ" + getXYZ(player));
+		Utils.sendPluginMessage(sender, player.getName() + "ä½äº" + Utils.getLocationString(player.getLocation()));
 		String[] names = RegionManager.getInstance().getNearbyRegionNames(player.getLocation());
 		if (names.length != 0)
-			player.sendMessage("ÔÚ" + Utils.joinString(names, ", ") + "¸½½ü");
+			Utils.sendPluginMessage(sender, "åœ¨" + Utils.joinString(names, ", ") + "é™„è¿‘");
 		return true;
-	}
-
-	private String getXYZ(Player player) {
-		Location loc = player.getLocation();
-		return Utils.getWorldNameCN(player.getWorld()) + "µÄ (" + loc.getBlockX() + ", " + loc.getBlockY() + ", "
-				+ loc.getBlockZ() + ")";
 	}
 	
 	private boolean showHelper(CommandSender sender) {
-		sender.sendMessage("»¶Ó­Ê¹ÓÃ whereis ²å¼ş£¬Ê¹ÓÃ·½·¨£º");
-		sender.sendMessage("/whereis [me/Íæ¼ÒÃû] ---- ²éÑ¯Íæ¼ÒÎ»ÖÃ");
-		sender.sendMessage("/whereis-list [-r] ---- »ñÈ¡Íæ¼ÒËùÔÚÇøÓòÁĞ±í");
+		Utils.sendPluginMessage(sender, "æ¬¢è¿ä½¿ç”¨ whereis æ’ä»¶");
+		Utils.sendPluginMessage(sender, "whereis [me/ç©å®¶å] ---- æŸ¥è¯¢ç©å®¶ä½ç½®");
+		Utils.sendPluginMessage(sender, "/whereis-list [-r] ---- è·å–ç©å®¶æ‰€åœ¨åŒºåŸŸåˆ—è¡¨");
 		return true;
 	}
 }

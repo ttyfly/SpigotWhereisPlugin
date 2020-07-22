@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Set;
 
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.World;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -15,31 +16,30 @@ public class WhereisListCmd implements CommandExecutor {
 	@Override
 	public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
 		if (args.length == 0)
-			return defaultList(sender);
+			return sendWorldList(sender);
 		else if (args[0].equals("-r"))
-			return detailedList(sender);
+			return sendRegionList(sender);
 		else
 			return false;
 	}
 
-	private boolean defaultList(CommandSender sender) {
+	private boolean sendWorldList(CommandSender sender) {
 		for (World world : Bukkit.getWorlds()) {
 			List<Player> players = world.getPlayers();
 			if (players.size() == 0)
 				continue;
-			StringBuffer msg = new StringBuffer();
-			msg.append("[" + Utils.getWorldNameCN(world) + "]");
+			Set<String> playerNames = new HashSet<String>();
 			for (Player player : players)
-				msg.append(" " + player.getName());
-			sender.sendMessage(msg.toString());
+				playerNames.add(player.getName());
+			Utils.sendPluginMessage(sender, ChatColor.DARK_AQUA + "[" + Utils.getWorldNameCN(world) + "] " + ChatColor.WHITE + Utils.joinString(playerNames, ", "));
 		}
 		return true;
 	}
 
-	private boolean detailedList(CommandSender sender) {
+	private boolean sendRegionList(CommandSender sender) {
 		String[] names = RegionManager.getInstance().getAllRegionNames();
 		if (names.length == 0) {
-			sender.sendMessage("Î´ÉèÖÃÇøÓò");
+			Utils.sendPluginMessage(sender, "æœªè®¾ç½®åŒºåŸŸ");
 			return true;
 		}
 
@@ -50,9 +50,9 @@ public class WhereisListCmd implements CommandExecutor {
 			Set<String> playerNames = new HashSet<String>();
 			for (Player player : players)
 				playerNames.add(player.getName());
-			sender.sendMessage("[" + name + "] " + Utils.joinString(playerNames, " "));
+			Utils.sendPluginMessage(sender, ChatColor.DARK_AQUA + "[" + name + "] " + ChatColor.WHITE + Utils.joinString(playerNames, ", "));
 		}
-		sender.sendMessage("ÇøÓòÍâÍæ¼ÒÎ´ÏÔÊ¾");
+		Utils.sendPluginMessage(sender, "æœªæ˜¾ç¤ºåŒºåŸŸå¤–ç©å®¶");
 		return true;
 	}
 }

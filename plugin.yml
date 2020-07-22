@@ -3,6 +3,7 @@ main: com.ttyfly.whereisplugin.SpigotWhereisPlugin
 version: 1.0
 author: ttyfly
 api-version: 1.16
+website: https://github.com/ttyfly/SpigotWhereisPlugin
 commands:
   whereis:
     description: 查询玩家位置
